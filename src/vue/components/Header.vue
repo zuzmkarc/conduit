@@ -82,6 +82,11 @@
             {{ user.username }}
           </router-link>
         </li>
+        <li class="nav-item" v-if="user.username">
+          <a class="nav-link" active-class="active" @click="logout">
+            <i class="ion-android-exit"></i>&nbsp;Log out
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -93,6 +98,17 @@ export default {
   name: "Header",
   computed: {
     ...mapGetters(["user", "is_authenticated"])
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logOut")
+        .then(() => {
+          this.$router.push({ name: "home" });
+        });
+    }
   }
 };
 </script>
+
+
+

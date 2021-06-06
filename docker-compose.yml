@@ -1,22 +1,6 @@
 version: "3"
 
 services:
-
-  apache:
-    container_name: realworld_apache
-    build:
-      context: .
-      dockerfile: .docker/apache.dockerfile
-    volumes:
-      - ./src:/var/www/src
-    working_dir: /var/www/src
-    depends_on:
-      - drash
-    ports:
-      - "8080:80"
-    networks:
-      - drash-app-network
-
   postgres:
     image: "postgres:11"
     container_name: "realworld_postgres"
