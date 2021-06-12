@@ -41,7 +41,7 @@
               </li>
             </ul>
           </div>
-          <router-view :key="$route.fullPath>
+          <router-view :key="$route.fullPath">
           </router-view>
         </div>
         <div class="col-md-3">
