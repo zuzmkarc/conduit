@@ -104,7 +104,8 @@ export default {
               }
             });
             console.log(articles)
-            context.dispatch("setArticles", articles);
+            context.dispatch("fetchArticles");
+            context.dispatch("fetchTags")
             context.dispatch("unsetArticle", {});
             resolve(true);
           } else {
@@ -196,7 +197,7 @@ export default {
         .get("/api/articles", {
           params: {
             author: params.filters.author,
-            favorited_by: params.favorited,
+            favorited_by: params.filters.favorited,
             offset: params.offset,
             tag: params.filters.tag,
             user_id: context.getters.user.id,
@@ -323,9 +324,7 @@ export default {
   setArticles(context, articles) {
     articles.forEach((article) => {
       
-      if (article.tags !== undefined && typeof article.tags == String && article.tags.length > 0) {
-        console.log(article)
-        console.log(article.tags)
+      if (article.tags !== undefined && article.tags.length > 0) {
         article.tags = article.tags.split(",");
       } else {
         article.tags = [];
