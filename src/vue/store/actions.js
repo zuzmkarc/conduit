@@ -95,6 +95,7 @@ export default {
       axios
         .delete("/api/articles/" + slug)
         .then((response) => {
+          console.log(response)
           if (response.data.success === true) {
             let articles = context.getters.articles;
             articles.forEach((article, i) => {
@@ -102,6 +103,7 @@ export default {
                 articles.splice(i, 1);
               }
             });
+            console.log(articles)
             context.dispatch("setArticles", articles);
             context.dispatch("unsetArticle", {});
             resolve(true);
@@ -110,6 +112,8 @@ export default {
           }
         })
         .catch((err) => {
+          console.log(err)
+          console.log(err.response)
           resolve(err.response);
         });
     });
@@ -191,10 +195,10 @@ export default {
       axios
         .get("/api/articles", {
           params: {
-            author: params.author,
+            author: params.filters.author,
             favorited_by: params.favorited,
             offset: params.offset,
-            tag: params.tag,
+            tag: params.filters.tag,
             user_id: context.getters.user.id,
           },
         })
@@ -224,7 +228,7 @@ export default {
           console.log(response)
           context.dispatch("setProfile", response.data.profile);
         })
-        .catch((response) => {
+        .catch((error) => {
           console.log("Unsetting profile.");
           console.log(error.response);
           context.dispatch("unsetProfile");
@@ -318,7 +322,10 @@ export default {
 
   setArticles(context, articles) {
     articles.forEach((article) => {
-      if (article.tags.length > 0) {
+      
+      if (article.tags !== undefined && typeof article.tags == String && article.tags.length > 0) {
+        console.log(article)
+        console.log(article.tags)
         article.tags = article.tags.split(",");
       } else {
         article.tags = [];
