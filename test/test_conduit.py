@@ -4,6 +4,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from test_data import test_user
 
 
 class TestConduit(object):
@@ -25,15 +26,15 @@ class TestConduit(object):
         # username_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Username"]')))
         username_field = self.browser.find_element_by_xpath('//input[@placeholder="Username"]')
         username_field.clear()
-        username_field.send_keys("testuser")
+        username_field.send_keys(test_user["username_invalid"])
         # email_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         email_field = self.browser.find_element_by_xpath('//input[@placeholder="Email"]')
         email_field.clear()
-        email_field.send_keys("test@gmail")
+        email_field.send_keys(test_user["email_invalid"])
         # password_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
         password_field = self.browser.find_element_by_xpath('//input[@placeholder="Password"]')
         password_field.clear()
-        password_field.send_keys("Test2022")
+        password_field.send_keys(test_user["pwd_invalid"])
         # login_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn.click()
@@ -56,11 +57,11 @@ class TestConduit(object):
         email_field = self.browser.find_element_by_xpath('//input[@placeholder="Email"]')
         #email_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         email_field.clear()
-        email_field.send_keys("csokinyuszi2022@gmail.com")
+        email_field.send_keys(test_user["email_valid"])
         #password_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Password"]')))
         password_field = self.browser.find_element_by_xpath('//input[@placeholder="Password"]')
         password_field.clear()
-        password_field.send_keys("Nyuszi22")
+        password_field.send_keys(test_user["pwd_valid"])
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn.click()
         time.sleep(5)
@@ -79,11 +80,11 @@ class TestConduit(object):
         email_field = self.browser.find_element_by_xpath('//input[@placeholder="Email"]')
         # email_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         email_field.clear()
-        email_field.send_keys("csokinyuszi2022@gmail.com")
+        email_field.send_keys(test_user["email_valid"])
         # password_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Password"]')))
         password_field = self.browser.find_element_by_xpath('//input[@placeholder="Password"]')
         password_field.clear()
-        password_field.send_keys("Nyuszi22")
+        password_field.send_keys(test_user["pwd_valid"])
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn.click()
         time.sleep(5)
