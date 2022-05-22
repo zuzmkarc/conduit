@@ -69,3 +69,26 @@ class TestConduit(object):
         logout_btn = self.browser.find_element_by_xpath('//a[@active-class="active"]')
         assert logged_in_user_name.text == "csokinyuszi"
         assert logout_btn.is_displayed()
+
+    def test_logout(self):
+        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        sign_in_btn.click()
+        time.sleep(5)
+        email_field = self.browser.find_element_by_xpath('//input[@placeholder="Email"]')
+        # email_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
+        email_field.clear()
+        email_field.send_keys("csokinyuszi2022@gmail.com")
+        # password_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Password"]')))
+        password_field = self.browser.find_element_by_xpath('//input[@placeholder="Password"]')
+        password_field.clear()
+        password_field.send_keys("Nyuszi22")
+        login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        login_btn.click()
+        time.sleep(5)
+        logout_btn = self.browser.find_element_by_xpath('//a[@active-class="active"]')
+        logged_in_user_name = self.browser.find_elements_by_xpath('//a[@href="#/@csokinyuszi/"]')[0]
+        logout_btn.click()
+        time.sleep(5)
+        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        assert sign_in_btn.is_displayed()
+
