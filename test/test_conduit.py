@@ -48,6 +48,7 @@ class TestConduit(object):
         assert invalid_email_msg.text == "Email must be a valid email."
         assert reg_failure_alert.text == "Registration failed!"
 
+    # TC-02 Login with valid credentials:
     def test_login(self):
         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
         sign_in_btn.click()
@@ -70,6 +71,7 @@ class TestConduit(object):
         assert logged_in_user_name.text == "csokinyuszi"
         assert logout_btn.is_displayed()
 
+    # TC-03 Logout user
     def test_logout(self):
         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
         sign_in_btn.click()
