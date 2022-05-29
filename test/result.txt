@@ -1,15 +1,5 @@
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="d47bd5be-c6b9-4466-a402-c01ac957fed5")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="74291311-5e29-4145-be8b-267402630dee")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="267b9dfa-6921-45a9-9905-c02ccc4b49e1")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="fee7d749-a8cc-4b12-ae4a-2aaae70e8b45")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="a5422415-525f-4ca4-a025-a8512e1d258e")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="05021455-7f29-4ac4-9168-fe0ad100eec7")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="4c842ec0-aec3-453c-b050-eeb424b38e4a")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="b625baa7-5056-475a-a1d8-a4440fd93bc1")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="0ac6ee1a-cb70-42c6-adce-405739ab2217")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="a4568178-c8b6-4b34-8963-0455a2fe531e")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="cd802e1e-5b27-4413-ba24-9b383e59300c")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="8f023560-fff2-41df-b24a-9cf44b4fa226")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="99080df9-0999-481a-9c07-4602a22fa051")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="4850665e-086e-4846-9e45-7066138a4d54")>
-<selenium.webdriver.remote.webelement.WebElement (session="2662476c7201dbf0adfeffd8f884c93b", element="9c18777e-93c5-4d44-a169-3c6246bd1379")>
+Lorem ipsum dolor sit amet
+Urna nunc id cursus metus.
+Egestas egestas
+Nibh praesent tristique magna
+Nunc lobortis mattis aliquam

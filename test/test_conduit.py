@@ -1,3 +1,5 @@
+import csv
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import time
@@ -16,6 +18,25 @@ class TestConduit(object):
 
     def teardown(self):
         self.browser.quit()
+
+    def login(self):
+        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        sign_in_btn.click()
+
+        email_field = WebDriverWait(self.browser, 2).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
+        email_field.clear()
+        email_field.send_keys(test_user["email_valid"])
+        password_field = WebDriverWait(self.browser, 2).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
+
+        password_field.clear()
+        password_field.send_keys(test_user["pwd_valid"])
+
+        login_btn = WebDriverWait(self.browser, 2).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+        login_btn.click()
 
     # TC-01 Registration with invalid email
     # def test_registration(self):
@@ -58,51 +79,36 @@ class TestConduit(object):
     #
     # # TC-02 Login with valid credentials:
     # def test_login(self):
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
+    # sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+    # sign_in_btn.click()
     #
-    #     email_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     password_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
+    # email_field = WebDriverWait(self.browser, 2).until(
+    #     EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
+    # email_field.clear()
+    # email_field.send_keys(test_user["email_valid"])
+    # password_field = WebDriverWait(self.browser, 2).until(
+    #     EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
     #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
+    # password_field.clear()
+    # password_field.send_keys(test_user["pwd_valid"])
     #
-    #     login_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+    # login_btn = WebDriverWait(self.browser, 2).until(
+    #     EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     #
-    #     login_btn.click()
+    # login_btn.click()
+
+    # self.login()
+    # logged_in_user_name = WebDriverWait(self.browser, 2).until(
+    #     EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
+    # logout_btn = WebDriverWait(self.browser, 2).until(
+    #     EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
     #
-    #     logged_in_user_name = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-    #     logout_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
-    #
-    #     assert logged_in_user_name.text == "csokinyuszi"
-    #     assert logout_btn.is_displayed()
+    # assert logged_in_user_name.text == "csokinyuszi"
+    # assert logout_btn.is_displayed()
     #
     # # TC-03 Logout user
     # def test_logout(self):
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
-    #
-    #     email_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     password_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
-    #
-    #     login_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #     login_btn.click()
+    #     self.login()
     #
     #     logout_btn = WebDriverWait(self.browser, 2).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
     #
@@ -132,24 +138,7 @@ class TestConduit(object):
 
     # TC-05 Create new element
     # def test_create_new_element(self):
-    #     # sign_in()
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
-    #
-    #     email_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     password_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
-    #
-    #     login_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #     login_btn.click()
+    #    self.login()
     #
     #     new_article_btn = WebDriverWait(self.browser, 2).until(
     #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
@@ -200,20 +189,7 @@ class TestConduit(object):
 
     # TC-06 Delete element
     # def test_delete_element(self):
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
-    #     time.sleep(3)
-    #     email_field = self.browser.find_element_by_xpath('//input[@placeholder="Email"]')
-    #     # email_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     # password_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Password"]')))
-    #     password_field = self.browser.find_element_by_xpath('//input[@placeholder="Password"]')
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
-    #     login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
-    #     login_btn.click()
-    #     time.sleep(3)
+    #    self.login()
     #
     #     new_article_btn = self.browser.find_element_by_xpath('//a[@href="#/editor"]')
     #     new_article_btn.click()
@@ -263,23 +239,7 @@ class TestConduit(object):
 
     # TC-07 Import data from file
     #     def test_import_data_from_file(self):
-    #         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #         sign_in_btn.click()
-    #
-    #         email_field = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #         email_field.clear()
-    #         email_field.send_keys(test_user["email_valid"])
-    #         password_field = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #         password_field.clear()
-    #         password_field.send_keys(test_user["pwd_valid"])
-    #
-    #         login_btn = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #         login_btn.click()
+    #         self.login()
     #
     #         logged_in_user_name = WebDriverWait(self.browser, 5).until(
     #             EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
@@ -314,25 +274,64 @@ class TestConduit(object):
     #         for i in range(1, (len(comment_list_after)) - 1):
     #             trash_btn[i].click()
 
+    #  TC-07 Import data from csv file
+    # def test_import_data_from_file(self):
+    #     self.login()
+    #
+    #     logged_in_user_name = WebDriverWait(self.browser, 5).until(
+    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
+    #     logged_in_user_name.click()
+    #
+    #     articles_before = WebDriverWait(self.browser, 5).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
+    #     articles_before_length = len(articles_before)
+    #
+    #     new_article_btn = WebDriverWait(self.browser, 2).until(
+    #             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+    #     new_article_btn.click()
+    #     time.sleep(3)
+    #
+    #     publish_btn = self.browser.find_element_by_xpath('//button[@type="submit"]')
+    #
+    #     new_article_title_xpath = '//input[@placeholder="Article Title"]'
+    #     new_article_about_xpath = '''//input[@placeholder="What's this article about?"]'''
+    #     new_article_text_xpath = '//textarea[@placeholder="Write your article (in markdown)"]'
+    #     new_article_tag_xpath = '//input[@placeholder="Enter tags"]'
+    #
+    #     def find_and_clear_element(element_xpath):
+    #         web_element = WebDriverWait(self.browser, 2).until(
+    #             EC.presence_of_element_located((By.XPATH, element_xpath)))
+    #         web_element.clear()
+    #         return web_element
+    #
+    #     with open("madardalok.csv", "r") as csvfile:
+    #         csvreader = csv.reader(csvfile, delimiter=";")
+    #         next(csvreader)
+    #         for row in csvreader:
+    #             print(row)
+    #             find_and_clear_element(new_article_title_xpath).send_keys(row[0])
+    #             find_and_clear_element(new_article_about_xpath).send_keys(row[1])
+    #             find_and_clear_element(new_article_text_xpath).send_keys(row[2])
+    #             find_and_clear_element(new_article_tag_xpath).send_keys(row[3])
+    #             publish_btn.click()
+    #             new_article_btn.click()
+    #
+    #     logged_in_user_name.click()
+    #
+    #     articles_after = WebDriverWait(self.browser, 5).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
+    #     articles_after_length = len(articles_after)
+    #
+    #     assert articles_after_length - 4 == articles_before_length
+
+    # trash_btn = WebDriverWait(self.browser, 5).until(
+    #     EC.presence_of_all_elements_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+    # for i in range(1, (len(comment_list_after)) - 1):
+    #     trash_btn[i].click()
+
     # TC-08 Update element (profile picture)
     #     def test_update_profile_picture(self):
-    #         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #         sign_in_btn.click()
-    #
-    #         email_field = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #         email_field.clear()
-    #         email_field.send_keys(test_user["email_valid"])
-    #         password_field = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #         password_field.clear()
-    #         password_field.send_keys(test_user["pwd_valid"])
-    #
-    #         login_btn = WebDriverWait(self.browser, 2).until(
-    #                 EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #         login_btn.click()
+    #         self.login()
     #
     #         settings = WebDriverWait(self.browser, 2).until(
     #                 EC.presence_of_element_located((By.XPATH, '//a[@href = "#/settings"]')))
@@ -382,23 +381,7 @@ class TestConduit(object):
 
     # TC-09 List elements
     # def test_list_elements(self):
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
-    #
-    #     email_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     password_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
-    #
-    #     login_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #     login_btn.click()
+    #     self.login()
     #
     #     #all_articles_list = WebDriverWait(self.browser, 2).until(EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
     #
@@ -420,23 +403,8 @@ class TestConduit(object):
 
     # TC-10 Pagination
     # def test_pagination(self):
-    #     sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    #     sign_in_btn.click()
-    #
-    #     email_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_valid"])
-    #     password_field = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_valid"])
-    #
-    #     login_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #     login_btn.click()
+    #     self.login()
+
     #     #page_one_btn = WebDriverWait(self.browser, 2).until(EC.presence_of_all_elements_located((By.XPATH, '//li/a[@class="page-link"]')[0]))
     #     page_one_btn = self.browser.find_elements_by_xpath('//li/a[@class="page-link"]')[0]
     #     #page_two_btn = WebDriverWait(self.browser, 2).until(EC.presence_of_all_elements_located((By.XPATH, '//li/a[@class="page-link"]')[1]))
@@ -452,33 +420,24 @@ class TestConduit(object):
     #     assert page_two_btn.value_of_css_property("background-color") == "#5cb85c"
     #     #assert page_two_btn.get_attribute("class") == "page-item active"
 
-#Test-11 Save data to file - collect user's articles' titles into txt file
-    def test_save_data_to_file(self):
-        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-        sign_in_btn.click()
-
-        email_field = WebDriverWait(self.browser, 2).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-        email_field.clear()
-        email_field.send_keys(test_user["email_valid"])
-        password_field = WebDriverWait(self.browser, 2).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-
-        password_field.clear()
-        password_field.send_keys(test_user["pwd_valid"])
-
-        login_btn = WebDriverWait(self.browser, 2).until(
-            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-
-        login_btn.click()
-
-        author = WebDriverWait(self.browser, 2).until(
-             EC.presence_of_element_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
-        author.click()
-        author_articles_titles = WebDriverWait(self.browser, 2).until(
-             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
-        with open("result.txt", "w", encoding = 'UTF-8') as result_content:
-            for title in author_articles_titles:
-                result_content.write("%s\n" % title)
-
-
+    # # Test-11 Save data to file - collect user's articles' titles into txt file
+    # def test_save_data_to_file(self):
+    #     self.login()
+    #
+    #     author = WebDriverWait(self.browser, 3).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
+    #     author[0].click()
+    #     time.sleep(3)
+    #
+    #     author_articles_titles = WebDriverWait(self.browser, 3).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
+    #
+    #     with open("result.txt", "w", encoding='UTF-8') as result_content_empty:
+    #         for title in author_articles_titles:
+    #             result_content_empty.write(title.text)
+    #             result_content_empty.write('\n')
+    #
+    #     with open("result.txt", "r", encoding='UTF-8') as result_content_filled:
+    #         check_content = result_content_filled.readlines()
+    #
+    #     assert len(check_content) == len(author_articles_titles)

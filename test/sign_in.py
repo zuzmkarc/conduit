@@ -36,19 +36,21 @@ login_btn.click()
 # profile_pic_original = profile_pic_field.get_attribute("value")
 #
 # print(profile_pic_original)
-
-author = WebDriverWait(browser, 2).until(
-    EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
+time.sleep(3)
+#author = WebDriverWait(browser, 2).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
+author = browser.find_elements_by_xpath('//a[@href = "#/@testuser1/" and @class="author"]')
 author[0].click()
-author_articles_titles = WebDriverWait(browser, 2).until(
-    EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
+time.sleep(3)
+author_articles_titles = browser.find_elements_by_xpath('//a[@class="preview-link"]//h1')
+#author_articles_titles = WebDriverWait(browser, 2).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
 
-first_title = browser.find_elements_by_xpath('//a[@class="preview-link"]//h1')[0]
-print(first_title.text)
-titles_list = []
+# first_title = browser.find_elements_by_xpath('//a[@class="preview-link"]//h1')[0]
+# print(first_title.text)
+
+print(len(author_articles_titles))
 for i in author_articles_titles:
-    titles_list.append(i.text)
-    print(titles_list)
+    print(i.text)
+
 
 #assert author_articles_titles[0].text == "Lorem ipsum dolor sit amet"
 # author_articles_titles_list = []
