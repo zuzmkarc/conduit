@@ -22,23 +22,26 @@ class TestConduit(object):
     def login(self):
         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
         sign_in_btn.click()
-
-        email_field = WebDriverWait(self.browser, 2).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-        email_field.clear()
-        email_field.send_keys(test_user["email_valid"])
-        password_field = WebDriverWait(self.browser, 2).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-
-        password_field.clear()
-        password_field.send_keys(test_user["pwd_valid"])
-
+        email_field_xpath = '//input[@placeholder="Email"]'
+        password_field_xpath = '//input[@placeholder="Password"]'
+        self.find_and_clear_element(email_field_xpath).send_keys(test_user["email_valid"])
+        self.find_and_clear_element(password_field_xpath).send_keys(test_user["pwd_valid"])
         login_btn = WebDriverWait(self.browser, 2).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-
         login_btn.click()
 
-    # TC-01 Registration with invalid email
+    def click_logged_in_user_name(self):
+        logged_in_user_name = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
+        logged_in_user_name.click()
+
+    def find_and_clear_element(self, element_xpath):
+        web_element = WebDriverWait(self.browser, 2).until(
+            EC.presence_of_element_located((By.XPATH, element_xpath)))
+        web_element.clear()
+        return web_element
+
+    # TC-01 Registration with invalid email ***PASSED***
     # def test_registration(self):
     #     sign_up_btn = WebDriverWait(self.browser, 2).until(
     #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
@@ -77,27 +80,10 @@ class TestConduit(object):
     #     assert invalid_email_msg.text == "Email must be a valid email."
     #     assert reg_failure_alert.text == "Registration failed!"
     #
-    # # TC-02 Login with valid credentials:
+    # # TC-02 Login with valid credentials: ***PASSED***
     # def test_login(self):
-    # sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-    # sign_in_btn.click()
-    #
-    # email_field = WebDriverWait(self.browser, 2).until(
-    #     EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    # email_field.clear()
-    # email_field.send_keys(test_user["email_valid"])
-    # password_field = WebDriverWait(self.browser, 2).until(
-    #     EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    # password_field.clear()
-    # password_field.send_keys(test_user["pwd_valid"])
-    #
-    # login_btn = WebDriverWait(self.browser, 2).until(
-    #     EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    # login_btn.click()
-
     # self.login()
+
     # logged_in_user_name = WebDriverWait(self.browser, 2).until(
     #     EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
     # logout_btn = WebDriverWait(self.browser, 2).until(
@@ -106,7 +92,7 @@ class TestConduit(object):
     # assert logged_in_user_name.text == "csokinyuszi"
     # assert logout_btn.is_displayed()
     #
-    # # TC-03 Logout user
+    # # TC-03 Logout user ***PASSED***
     # def test_logout(self):
     #     self.login()
     #
@@ -118,7 +104,7 @@ class TestConduit(object):
     #     assert sign_in_btn.is_displayed()
 
     # TC-04 Accept cookies
-    # def test_accept_cookie(self):
+    # def test_accept_cookie(self): ***FAILED***
     #
     #     cookie_bar = WebDriverWait(self.browser, 2).until(EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
     #     assert cookie_bar.is_displayed()
@@ -136,143 +122,78 @@ class TestConduit(object):
     #
     #     assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
 
-    # TC-05 Create new element
+    # TC-05 Create new element (add comment to article)
     # def test_create_new_element(self):
-    #    self.login()
+    #     self.login()
+    #     self.click_logged_in_user_name()
     #
-    #     new_article_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
-    #     new_article_btn.click()
-    #     #time.sleep(3)
-    #
-    #     new_article_title = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-    #     new_article_about = self.browser.find_element_by_xpath('''//input[@placeholder="What's this article about?"]''')
-    #     new_article_text = self.browser.find_element_by_xpath(
-    #         '//textarea[@placeholder="Write your article (in markdown)"]')
-    #     new_article_tag = self.browser.find_element_by_xpath('//input[@placeholder="Enter tags"]')
-    #
-    #     new_article_title.send_keys(test_user["article_title"])
-    #     new_article_about.send_keys(test_user["article_about"])
-    #     new_article_text.send_keys(test_user["article_text"])
-    #     new_article_tag.send_keys(test_user["article_tag"])
-    #
+    #     article_to_comment = WebDriverWait(self.browser, 5).until(
+    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/articles/zz" and @class="preview-link"]')))
+    #     article_to_comment.click()
     #     time.sleep(3)
     #
-    #     publish_btn = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
-    #     publish_btn.click()
+    #     comment_field = WebDriverWait(self.browser, 3).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
+    #     comment_field.clear()
+    #     comment_field.send_keys(test_user["comment"])
+    #     post_comment_btn = WebDriverWait(self.browser, 3).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
+    #     post_comment_btn.click()
     #
-    #     time.sleep(3)
-    #
-    #     logged_in_user_name = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-    #     logged_in_user_name.click()
-    #
-    #     time.sleep(3)
-    #
-    #     published_article = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_all_elements_located((By.XPATH, '//a[@href="#/articles/szap"]')[0]))
-    #
-    #     assert published_article.is_displayed()
-    #
-    #     published_article.click()
-    #     time.sleep(3)
-    #
-    #     published_article_text = WebDriverWait(self.browser, 2).until(
-    #         EC.presence_of_element_located((By.XPATH,'//div/p')))
-    #
-    #     assert published_article_text.text == test_user["article_text"]
-    #
-    #     trash_btn = self.browser.find_elements_by_xpath('//i[@class="ion-trash-a"]')
-    #     trash_btn[0].click()
-
-    # TC-06 Delete element
-    # def test_delete_element(self):
-    #    self.login()
-    #
-    #     new_article_btn = self.browser.find_element_by_xpath('//a[@href="#/editor"]')
-    #     new_article_btn.click()
-    #     time.sleep(3)
-    #     new_article_title = self.browser.find_element_by_xpath('//input[@placeholder="Article Title"]')
-    #     new_article_about = self.browser.find_element_by_xpath(
-    #         '''//input[@placeholder="What's this article about?"]''')
-    #     new_article_text = self.browser.find_element_by_xpath(
-    #         '//textarea[@placeholder="Write your article (in markdown)"]')
-    #     new_article_tag = self.browser.find_element_by_xpath('//input[@placeholder="Enter tags"]')
-    #     publish_btn = self.browser.find_element_by_xpath('//button[@type="submit"]')
-    #
-    #     new_article_title.send_keys(test_user["article_title"])
-    #     new_article_about.send_keys(test_user["article_about"])
-    #     new_article_text.send_keys(test_user["article_text"])
-    #     new_article_tag.send_keys(test_user["article_tag"])
-    #
-    #     publish_btn.click()
-    #     time.sleep(5)
-    #
-    #     logged_in_user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH,'//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-    #     logged_in_user_name.click()
-    #     time.sleep(3)
-    #     #published_article = self.browser.find_element_by_xpath('//div[@class="col-xs-12"]')
-    #     #published_article.click()
-    #     #time.sleep(3)
-    #
-    #     articles_list = self.browser.find_elements_by_xpath('//div[@class="article-preview"]')
-    #
-    #     published_article = self.browser.find_element_by_xpath('//a[@href="#/articles/szap"]')
-    #     published_article.click()
-    #     time.sleep(3)
-    #
-    #     delete_article_btn = self.browser.find_element_by_xpath('//button[@class ="btn btn-outline-danger btn-sm"]')
-    #     delete_article_btn.click()
-    #     time.sleep(3)
-    #
-    #     logged_in_user_name = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-    #     logged_in_user_name.click()
-    #     time.sleep(3)
-    #
-    #     articles_list_modified = self.browser.find_elements_by_xpath('//div[@class="article-preview"]')
-    #
-    #     assert not len(articles_list) == len(articles_list_modified)
-    #
-    #
-
-    # TC-07 Import data from file
-    #     def test_import_data_from_file(self):
-    #         self.login()
-    #
-    #         logged_in_user_name = WebDriverWait(self.browser, 5).until(
-    #             EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-    #         logged_in_user_name.click()
-    #
-    #
-    #         article_to_comment = WebDriverWait(self.browser, 5).until(
-    #             EC.presence_of_element_located((By.XPATH, '//a[@href="#/articles/zz" and @class="preview-link"]')))
-    #         article_to_comment.click()
-    #         time.sleep(3)
-    #
-    #         comment_field = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
-    #         comment_field.clear()
-    #         with open('comments_data.txt', 'r', encoding='UTF-8') as f:
-    #             file_content = f.readline()
-    #             file_content_lines = []
-    #             while file_content:
-    #                 comment_field.clear()
-    #                 comment_field.send_keys(file_content)
-    #                 post_comment_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-sm btn-primary"]')
-    #                 post_comment_btn.click()
-    #                 file_content_lines.append(file_content)
-    #                 file_content = f.readline()
-    #
-    #         comment_list_after = WebDriverWait(self.browser, 5).until(
+    #     posted_comments = WebDriverWait(self.browser, 5).until(
     #             EC.presence_of_all_elements_located((By.XPATH, '//p[@class="card-text"]')))
+    #     my_comment = posted_comments[-1]
     #
-    #         assert len(file_content_lines) == len(comment_list_after)
+    #     for i in range(len(posted_comments)):
+    #         assert my_comment.text == test_user["comment"]
     #
-    #         trash_btn = WebDriverWait(self.browser, 5).until(
+    #     trash_buttons = WebDriverWait(self.browser, 5).until(
     #             EC.presence_of_all_elements_located((By.XPATH, '//i[@class="ion-trash-a"]')))
-    #         for i in range(1, (len(comment_list_after)) - 1):
-    #             trash_btn[i].click()
+    #     my_comment_trash_button = trash_buttons[-1]
+    #     my_comment_trash_button.click()
+
+    # TC-06 Delete element ***PASSED***
+    def test_delete_element(self):
+        self.login()
+        new_article_btn = WebDriverWait(self.browser, 3).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+        new_article_btn.click()
+        time.sleep(2)
+
+        new_article_title_xpath = '//input[@placeholder="Article Title"]'
+        new_article_about_xpath = '''//input[@placeholder="What's this article about?"]'''
+        new_article_text_xpath = '//textarea[@placeholder="Write your article (in markdown)"]'
+        new_article_tag_xpath = '//input[@placeholder="Enter tags"]'
+
+        self.find_and_clear_element(new_article_title_xpath).send_keys(test_user["article_title"])
+        self.find_and_clear_element(new_article_about_xpath).send_keys(test_user["article_about"])
+        self.find_and_clear_element(new_article_text_xpath).send_keys(test_user["article_text"])
+        self.find_and_clear_element(new_article_tag_xpath).send_keys(test_user["article_tag"])
+
+        publish_btn = WebDriverWait(self.browser, 3).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
+        publish_btn.click()
+        time.sleep(2)
+
+        self.click_logged_in_user_name()
+        time.sleep(2)
+
+        articles_list_before_deletion = WebDriverWait(self.browser, 3).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
+        articles_list_before_deletion_length = len(articles_list_before_deletion)
+
+        published_article = articles_list_before_deletion[-1]
+        published_article.click()
+
+        time.sleep(2)
+        delete_article_btn = self.browser.find_element_by_xpath('//button[@class ="btn btn-outline-danger btn-sm"]')
+        delete_article_btn.click()
+        time.sleep(2)
+
+        self.click_logged_in_user_name()
+        time.sleep(2)
+
+        articles_list_after_deletion = self.browser.find_elements_by_xpath('//div[@class="article-preview"]')
+        articles_list_after_deletion_length = len(articles_list_after_deletion)
+        assert articles_list_before_deletion_length - 1 == articles_list_after_deletion_length
 
     #  TC-07 Import data from csv file
     # def test_import_data_from_file(self):
@@ -420,7 +341,7 @@ class TestConduit(object):
     #     assert page_two_btn.value_of_css_property("background-color") == "#5cb85c"
     #     #assert page_two_btn.get_attribute("class") == "page-item active"
 
-    # # Test-11 Save data to file - collect user's articles' titles into txt file
+    # # TC-11 Save data to file - collect user's articles' titles into txt file ***PASSED***
     # def test_save_data_to_file(self):
     #     self.login()
     #
