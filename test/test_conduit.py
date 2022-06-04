@@ -109,10 +109,10 @@ class TestConduit(object):
 
         time.sleep(6)
 
-        logged_in_user_name = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')[2]))
-        logout_btn = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
+        logged_in_user_name = self.browser.find_elements_by_xpath('//a[@class="nav-link"]')[2]
+        logout_btn = self.browser.find_element_by_xpath('//a[@active-class="active"]')
+        #logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')[2]))
+        #logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
