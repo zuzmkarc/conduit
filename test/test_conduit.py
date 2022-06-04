@@ -103,7 +103,7 @@ class TestConduit(object):
         time.sleep(6)
 
         logged_in_user_name = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link"]')[2]))
+            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')[2]))
         logout_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
