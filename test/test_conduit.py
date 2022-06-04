@@ -68,8 +68,8 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         sign_in_btn.click()
 
-        email_field_xpath = '//input[@placeholder="Email"]'
-        password_field_xpath = '//input[@placeholder="Password"]'
+        email_field_xpath = '//input[@type="text"]'
+        password_field_xpath = '//input[@type="password"]'
 
         find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
         find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))

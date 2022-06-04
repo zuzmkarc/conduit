@@ -11,11 +11,11 @@ def login(browser, email, password):
     sign_in_btn.click()
 
     email_field = WebDriverWait(browser, 6).until(
-        EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Email"]')))
+        EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
     email_field.send_keys(email)
 
     password_field = WebDriverWait(browser, 6).until(
-        EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Password"]')))
+        EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
     password_field.send_keys(password)
 
     login_btn = WebDriverWait(browser, 6).until(
