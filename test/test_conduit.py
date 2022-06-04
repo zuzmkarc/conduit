@@ -17,7 +17,7 @@ class TestConduit(object):
         browser_options.headless = True
         self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=browser_options)
         self.browser.implicitly_wait(10)
-        URL = "http://conduitapp.progmasters.hu:1667/#/"
+        URL = "http://localhost:1667/#/"
         self.browser.get(URL)
 
     def teardown(self):
@@ -90,6 +90,7 @@ class TestConduit(object):
         time.sleep(6)
         #sign_in_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         sign_in_btn.click()
+        time.sleep(6)
 
         email_field_xpath = '//input[@type="text"]'
         password_field_xpath = '//input[@type="password"]'
