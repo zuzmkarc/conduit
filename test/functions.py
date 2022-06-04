@@ -23,6 +23,7 @@ def login(browser, email, password):
     login_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     login_btn.click()
+    time.sleep(6)
 
 
 def click_logged_in_user_name(browser):
