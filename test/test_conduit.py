@@ -24,37 +24,37 @@ class TestConduit(object):
 
     # TC-01 Registration with invalid email
     def test_registration(self):
-        sign_up_btn = WebDriverWait(self.browser, 2).until(
+        sign_up_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
         sign_up_btn.click()
 
-        username_field = WebDriverWait(self.browser, 2).until(
+        username_field = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
         username_field.clear()
         username_field.send_keys(test_user["username_invalid"])
-        email_field = WebDriverWait(self.browser, 2).until(
+        email_field = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
         email_field.clear()
         email_field.send_keys(test_user["email_invalid"])
 
-        password_field = WebDriverWait(self.browser, 2).until(
+        password_field = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
 
         password_field.clear()
         password_field.send_keys(test_user["pwd_invalid"])
 
-        login_btn = WebDriverWait(self.browser, 2).until(
+        login_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
 
         login_btn.click()
 
-        reg_failure_alert = WebDriverWait(self.browser, 2).until(
+        reg_failure_alert = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
 
-        invalid_email_msg = WebDriverWait(self.browser, 2).until(
+        invalid_email_msg = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
 
-        alert_popup = WebDriverWait(self.browser, 2).until(
+        alert_popup = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class="swal-modal"]')))
         assert alert_popup.is_displayed()
 
@@ -63,12 +63,24 @@ class TestConduit(object):
 
     # TC-02 Login with valid credentials:
     def test_login(self):
-        login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
+        sign_in_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        sign_in_btn.click()
+
+        email_field_xpath = '//input[@placeholder="Email"]'
+        password_field_xpath = '//input[@placeholder="Password"]'
+
+        find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
+        find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
+
+        login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        login_btn.click()
+
         time.sleep(3)
 
-        logged_in_user_name = WebDriverWait(self.browser, 2).until(
+        logged_in_user_name = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
-        logout_btn = WebDriverWait(self.browser, 2).until(
+        logout_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
         assert logged_in_user_name.text == "csokinyuszi"
@@ -78,32 +90,32 @@ class TestConduit(object):
     def test_logout(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        logout_btn = WebDriverWait(self.browser, 2).until(
+        logout_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
         logout_btn.click()
 
-        sign_in_btn = WebDriverWait(self.browser, 2).until(
+        sign_in_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert sign_in_btn.is_displayed()
 
     # TC-04 Accept cookies
     def test_accept_cookie(self):
-        cookie_bar = WebDriverWait(self.browser, 2).until(
+        cookie_bar = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
         assert cookie_bar.is_displayed()
 
-        div_list_init_page = WebDriverWait(self.browser, 2).until(
+        div_list_init_page = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
         div_list_init_page_length = len(div_list_init_page)
 
-        cookie_btn_accept = WebDriverWait(self.browser, 2).until(EC.presence_of_element_located(
+        cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
             (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
         cookie_btn_accept.click()
 
         time.sleep(2)
 
-        div_list_after_cookie_accept = WebDriverWait(self.browser, 2).until(
+        div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
         div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
 
@@ -114,7 +126,7 @@ class TestConduit(object):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         click_logged_in_user_name(self.browser)
         time.sleep(3)
-        article_to_comment = WebDriverWait(self.browser, 2).until(
+        article_to_comment = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/articles/zz" and @class="preview-link"]')))
         article_to_comment.click()
         time.sleep(3)
@@ -122,12 +134,12 @@ class TestConduit(object):
         comment_field_xpath = '//textarea[@placeholder="Write a comment..."]'
         find_and_clear_element(self.browser, comment_field_xpath).send_keys(test_article["comment"])
 
-        post_comment_btn = WebDriverWait(self.browser, 3).until(
+        post_comment_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
         post_comment_btn.click()
         time.sleep(2)
 
-        posted_comments = WebDriverWait(self.browser, 5).until(
+        posted_comments = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//p[@class="card-text"]')))
         my_comment = posted_comments[0]
 
@@ -136,7 +148,7 @@ class TestConduit(object):
     # TC-06 Delete element
     def test_delete_element(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
-        new_article_btn = WebDriverWait(self.browser, 3).until(
+        new_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_btn.click()
         time.sleep(2)
@@ -151,7 +163,7 @@ class TestConduit(object):
         find_and_clear_element(self.browser, new_article_text_xpath).send_keys(test_article["article_text"])
         find_and_clear_element(self.browser, new_article_tag_xpath).send_keys(test_article["article_tag"])
 
-        publish_btn = WebDriverWait(self.browser, 3).until(
+        publish_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
         publish_btn.click()
         time.sleep(2)
@@ -159,7 +171,7 @@ class TestConduit(object):
         click_logged_in_user_name(self.browser)
         time.sleep(2)
 
-        articles_list_before_deletion = WebDriverWait(self.browser, 3).until(
+        articles_list_before_deletion = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
         articles_list_before_deletion_length = len(articles_list_before_deletion)
 
@@ -167,7 +179,7 @@ class TestConduit(object):
         published_article.click()
 
         time.sleep(2)
-        delete_article_btn = WebDriverWait(self.browser, 2).until(
+        delete_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class ="btn btn-outline-danger btn-sm"]')))
         delete_article_btn.click()
         time.sleep(2)
@@ -175,7 +187,7 @@ class TestConduit(object):
         click_logged_in_user_name(self.browser)
         time.sleep(2)
 
-        articles_list_after_deletion = WebDriverWait(self.browser, 2).until(
+        articles_list_after_deletion = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
         articles_list_after_deletion_length = len(articles_list_after_deletion)
         assert articles_list_before_deletion_length - 1 == articles_list_after_deletion_length
@@ -187,11 +199,11 @@ class TestConduit(object):
         click_logged_in_user_name(self.browser)
         time.sleep(5)
 
-        articles_before = WebDriverWait(self.browser, 5).until(
+        articles_before = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
         articles_before_length = len(articles_before)
 
-        new_article_btn = WebDriverWait(self.browser, 5).until(
+        new_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_btn.click()
         time.sleep(3)
@@ -211,7 +223,7 @@ class TestConduit(object):
                 find_and_clear_element(self.browser, new_article_text_xpath).send_keys(row[2])
                 find_and_clear_element(self.browser, new_article_tag_xpath).send_keys(row[3])
 
-                publish_btn = WebDriverWait(self.browser, 5).until(
+                publish_btn = WebDriverWait(self.browser, 6).until(
                     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
                 time.sleep(3)
                 publish_btn.click()
@@ -221,7 +233,7 @@ class TestConduit(object):
 
         click_logged_in_user_name(self.browser)
 
-        articles_after = WebDriverWait(self.browser, 2).until(
+        articles_after = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
 
         articles_after_length = len(articles_after)
@@ -232,7 +244,7 @@ class TestConduit(object):
     def test_update_profile_picture(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        settings = WebDriverWait(self.browser, 2).until(
+        settings = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href = "#/settings"]')))
         settings.click()
         time.sleep(3)
@@ -240,18 +252,18 @@ class TestConduit(object):
         profile_pic_field_xpath = '//input[@placeholder="URL of profile picture"]'
         find_and_clear_element(self.browser, profile_pic_field_xpath).send_keys(test_user["profile-pic"])
 
-        update_btn = WebDriverWait(self.browser, 2).until(
+        update_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         update_btn.click()
 
-        confirm_btn = WebDriverWait(self.browser, 2).until(
+        confirm_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
         confirm_btn.click()
 
         click_logged_in_user_name(self.browser)
         time.sleep(2)
 
-        profile_pic = WebDriverWait(self.browser, 5).until(
+        profile_pic = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//img[@class="user-img"]')))
 
         assert profile_pic.get_attribute("src") == (test_user["profile-pic"])
@@ -260,15 +272,15 @@ class TestConduit(object):
     def test_list_elements(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        ipsum_tag = WebDriverWait(self.browser, 2).until(
+        ipsum_tag = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href = "#/tag/ipsum"]')))
         ipsum_tag.click()
         time.sleep(2)
 
-        tagged_articles_list = WebDriverWait(self.browser, 3).until(
+        tagged_articles_list = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
 
-        ipsum_tag_filter = WebDriverWait(self.browser, 3).until(
+        ipsum_tag_filter = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
 
         assert ipsum_tag_filter.is_displayed()
@@ -278,7 +290,7 @@ class TestConduit(object):
     def test_pagination(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        pagination_buttons = WebDriverWait(self.browser, 2).until(
+        pagination_buttons = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//li/a[@class="page-link"]')))
 
         page_one_btn = pagination_buttons[0]
@@ -297,12 +309,12 @@ class TestConduit(object):
     def test_save_data_to_file(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        author = WebDriverWait(self.browser, 3).until(
+        author = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
         author[0].click()
         time.sleep(3)
 
-        author_articles_titles = WebDriverWait(self.browser, 3).until(
+        author_articles_titles = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
 
         with open("result.txt", "w", encoding='UTF-8') as result_content_empty:
