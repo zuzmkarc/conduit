@@ -17,7 +17,7 @@ class TestConduit(object):
         browser_options.headless = True
         self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=browser_options)
         self.browser.implicitly_wait(10)
-        URL = 'http://localhost:1667/#/'
+        URL = "http://conduitapp.progmasters.hu:1667/#/"
         self.browser.get(URL)
 
     def teardown(self):
@@ -86,15 +86,20 @@ class TestConduit(object):
 
     # TC-02 Login with valid credentials:
     def test_login(self):
-        sign_in_btn = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        time.sleep(6)
+        #sign_in_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         sign_in_btn.click()
 
         email_field_xpath = '//input[@type="text"]'
         password_field_xpath = '//input[@type="password"]'
-
-        find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
-        find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
+        #
+        # find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
+        # find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
+        email_field = self.browser.find_element_by_xpath('//input[@type="text"]')
+        email_field.send_keys((test_user["email_valid"]))
+        password_field = self.browser.find_element_by_xpath('//input[@type="password"]')
+        password_field.send_keys((test_user["pwd_valid"]))
 
         login_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
