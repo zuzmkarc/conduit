@@ -23,6 +23,28 @@ class TestConduit(object):
     def teardown(self):
         self.browser.quit()
 
+    # TC-04 Accept cookies
+    def test_accept_cookie(self):
+        cookie_bar = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
+        assert cookie_bar.is_displayed()
+
+        div_list_init_page = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+        div_list_init_page_length = len(div_list_init_page)
+
+        cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
+            (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
+        cookie_btn_accept.click()
+
+        time.sleep(6)
+
+        div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+        div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
+
+        assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
+
     # TC-01 Registration with invalid email
     def test_registration(self):
         sign_up_btn = WebDriverWait(self.browser, 6).until(
@@ -101,28 +123,7 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert sign_in_btn.is_displayed()
 
-    # # TC-04 Accept cookies
-    # def test_accept_cookie(self):
-    #     cookie_bar = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
-    #     assert cookie_bar.is_displayed()
-    #
-    #     div_list_init_page = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-    #     div_list_init_page_length = len(div_list_init_page)
-    #
-    #     cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
-    #         (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
-    #     cookie_btn_accept.click()
-    #
-    #     time.sleep(6)
-    #
-    #     div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-    #     div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
-    #
-    #     assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
-    #
+
     # # TC-05 Create new element (add comment to article)
     # def test_create_new_element(self):
     #     login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
