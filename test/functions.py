@@ -9,16 +9,19 @@ def login(browser, email, password):
     sign_in_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH,'//a[@href="#/login"]')))
     sign_in_btn.click()
+    time.sleep(6)
 
     email_field = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
     email_field.clear()
     email_field.send_keys(email)
+    time.sleep(6)
 
     password_field = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
     password_field.clear()
     password_field.send_keys(password)
+    time.sleep(6)
 
     login_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
