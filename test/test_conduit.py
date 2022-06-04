@@ -16,6 +16,7 @@ class TestConduit(object):
         browser_options = Options()
         browser_options.headless = True
         self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=browser_options)
+        self.browser.implicitly_wait(10)
         URL = 'http://localhost:1667/#/'
         self.browser.get(URL)
 
@@ -73,7 +74,8 @@ class TestConduit(object):
         find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
         find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
 
-        login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        login_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn.click()
 
         time.sleep(6)
