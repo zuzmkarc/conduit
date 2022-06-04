@@ -76,7 +76,7 @@ class TestConduit(object):
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn.click()
 
-        time.sleep(3)
+        time.sleep(6)
 
         logged_in_user_name = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/@csokinyuszi/" and @class="nav-link"]')))
@@ -113,7 +113,7 @@ class TestConduit(object):
             (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
         cookie_btn_accept.click()
 
-        time.sleep(2)
+        time.sleep(6)
 
         div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
@@ -125,11 +125,11 @@ class TestConduit(object):
     def test_create_new_element(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         click_logged_in_user_name(self.browser)
-        time.sleep(3)
+        time.sleep(6)
         article_to_comment = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/articles/zz" and @class="preview-link"]')))
         article_to_comment.click()
-        time.sleep(3)
+        time.sleep(6)
 
         comment_field_xpath = '//textarea[@placeholder="Write a comment..."]'
         find_and_clear_element(self.browser, comment_field_xpath).send_keys(test_article["comment"])
@@ -137,7 +137,7 @@ class TestConduit(object):
         post_comment_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
         post_comment_btn.click()
-        time.sleep(2)
+        time.sleep(6)
 
         posted_comments = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//p[@class="card-text"]')))
@@ -151,7 +151,7 @@ class TestConduit(object):
         new_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_btn.click()
-        time.sleep(2)
+        time.sleep(6)
 
         new_article_title_xpath = '//input[@placeholder="Article Title"]'
         new_article_about_xpath = '''//input[@placeholder="What's this article about?"]'''
@@ -166,10 +166,10 @@ class TestConduit(object):
         publish_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
         publish_btn.click()
-        time.sleep(2)
+        time.sleep(6)
 
         click_logged_in_user_name(self.browser)
-        time.sleep(2)
+        time.sleep(6)
 
         articles_list_before_deletion = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
@@ -178,14 +178,14 @@ class TestConduit(object):
         published_article = articles_list_before_deletion[-1]
         published_article.click()
 
-        time.sleep(2)
+        time.sleep(6)
         delete_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class ="btn btn-outline-danger btn-sm"]')))
         delete_article_btn.click()
-        time.sleep(2)
+        time.sleep(6)
 
         click_logged_in_user_name(self.browser)
-        time.sleep(2)
+        time.sleep(6)
 
         articles_list_after_deletion = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
@@ -195,9 +195,9 @@ class TestConduit(object):
     # TC-07 Import data from csv file
     def test_import_data_from_file(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
-        time.sleep(5)
+        time.sleep(6)
         click_logged_in_user_name(self.browser)
-        time.sleep(5)
+        time.sleep(6)
 
         articles_before = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
@@ -206,7 +206,7 @@ class TestConduit(object):
         new_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
         new_article_btn.click()
-        time.sleep(3)
+        time.sleep(6)
 
         new_article_title_xpath = '//input[@placeholder="Article Title"]'
         new_article_about_xpath = '''//input[@placeholder="What's this article about?"]'''
@@ -225,11 +225,11 @@ class TestConduit(object):
 
                 publish_btn = WebDriverWait(self.browser, 6).until(
                     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
-                time.sleep(3)
+                time.sleep(6)
                 publish_btn.click()
                 new_article_btn.click()
 
-        time.sleep(3)
+        time.sleep(6)
 
         click_logged_in_user_name(self.browser)
 
@@ -247,7 +247,7 @@ class TestConduit(object):
         settings = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href = "#/settings"]')))
         settings.click()
-        time.sleep(3)
+        time.sleep(6)
 
         profile_pic_field_xpath = '//input[@placeholder="URL of profile picture"]'
         find_and_clear_element(self.browser, profile_pic_field_xpath).send_keys(test_user["profile-pic"])
@@ -261,7 +261,7 @@ class TestConduit(object):
         confirm_btn.click()
 
         click_logged_in_user_name(self.browser)
-        time.sleep(2)
+        time.sleep(6)
 
         profile_pic = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//img[@class="user-img"]')))
@@ -275,7 +275,7 @@ class TestConduit(object):
         ipsum_tag = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href = "#/tag/ipsum"]')))
         ipsum_tag.click()
-        time.sleep(2)
+        time.sleep(6)
 
         tagged_articles_list = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
@@ -300,7 +300,7 @@ class TestConduit(object):
         inactive_button_color_value = "rgba(92, 184, 92, 1)"
 
         page_one_btn.click()
-        time.sleep(2)
+        time.sleep(6)
 
         assert page_one_btn.value_of_css_property('color') == active_button_color_value
         assert page_two_btn.value_of_css_property('color') == inactive_button_color_value
@@ -312,7 +312,7 @@ class TestConduit(object):
         author = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author" and  @href = "#/@testuser1/"]')))
         author[0].click()
-        time.sleep(3)
+        time.sleep(6)
 
         author_articles_titles = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]//h1')))
