@@ -20,7 +20,7 @@ def login(browser, email, password):
         EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
     password_field.clear()
     password_field.send_keys(password)
-    
+
     login_btn = WebDriverWait(browser, 5).until(
         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     login_btn.click()
