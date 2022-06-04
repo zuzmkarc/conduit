@@ -98,12 +98,13 @@ class TestConduit(object):
         # find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
         # find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
         email_field = self.browser.find_element_by_xpath('//input[@type="text"]')
-        email_field.send_keys((test_user["email_valid"]))
-        password_field = self.browser.find_element_by_xpath('//input[@type="password"]')
-        password_field.send_keys((test_user["pwd_valid"]))
 
-        login_btn = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        password_field = self.browser.find_element_by_xpath('//input[@type="password"]')
+
+        #login_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        email_field.send_keys((test_user["email_valid"]))
+        password_field.send_keys((test_user["pwd_valid"]))
         login_btn.click()
 
         time.sleep(6)
@@ -113,7 +114,7 @@ class TestConduit(object):
         logout_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
-        assert logged_in_user_name.text == "csokinyuszi"
+        assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
     # TC-03 Logout user
