@@ -90,6 +90,8 @@ class TestConduit(object):
         sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
         sign_in_btn.click()
         time.sleep(10)
+        wait_until = ".element-i-want-to-be-present, .not-found-warning"
+        EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
         email_field_xpath = '//input[@type="text"]'
         password_field_xpath = '//input[@type="password"]'
@@ -104,11 +106,14 @@ class TestConduit(object):
         #time.sleep(10)
         login_btn.click()
         time.sleep(10)
+        wait_until = ".element-i-want-to-be-present, .not-found-warning"
+        EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
         logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
         logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
         time.sleep(10)
-        
+        wait_until = ".element-i-want-to-be-present, .not-found-warning"
+        EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
