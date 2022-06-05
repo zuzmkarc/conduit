@@ -24,26 +24,26 @@ class TestConduit(object):
         self.browser.quit()
 
     # TC-04 Accept cookies
-    def test_accept_cookie(self):
-        cookie_bar = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
-        assert cookie_bar.is_displayed()
-
-        div_list_init_page = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-        div_list_init_page_length = len(div_list_init_page)
-
-        cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
-            (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
-        cookie_btn_accept.click()
-
-        time.sleep(6)
-
-        div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-        div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
-
-        assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
+    # def test_accept_cookie(self):
+    #     cookie_bar = WebDriverWait(self.browser, 6).until(
+    #         EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
+    #     assert cookie_bar.is_displayed()
+    #
+    #     div_list_init_page = WebDriverWait(self.browser, 6).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+    #     div_list_init_page_length = len(div_list_init_page)
+    #
+    #     cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
+    #         (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
+    #     cookie_btn_accept.click()
+    #
+    #     time.sleep(6)
+    #
+    #     div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
+    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+    #     div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
+    #
+    #     assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
 
     # # TC-01 Registration with invalid email
     # def test_registration(self):
@@ -86,10 +86,9 @@ class TestConduit(object):
 
     # TC-02 Login with valid credentials:
     def test_login(self):
-        sign_in_btn = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
-        sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        sign_in_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@href="#/login"]')))
+        #sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
         sign_in_btn.click()
-        time.sleep(10)
         wait_until = ".element-i-want-to-be-present, .not-found-warning"
         EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
@@ -99,20 +98,18 @@ class TestConduit(object):
         find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
         #email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
         #password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
-        #login_btn = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        login_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         #email_field.send_keys((test_user["email_valid"]))
         #password_field.send_keys((test_user["pwd_valid"]))
         #time.sleep(10)
         login_btn.click()
-        time.sleep(10)
         wait_until = ".element-i-want-to-be-present, .not-found-warning"
         EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
-        logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
-        logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
-        time.sleep(10)
-        wait_until = ".element-i-want-to-be-present, .not-found-warning"
+        logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
+        logout_btn = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@active-class="active"]')))
+        #wait_until = ".element-i-want-to-be-present, .not-found-warning"
         EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
