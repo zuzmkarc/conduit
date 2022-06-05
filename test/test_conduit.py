@@ -17,10 +17,9 @@ class TestConduit(object):
         browser_options.headless = True
         self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=browser_options)
         #self.browser = webdriver.Chrome(ChromeDriverManager().install())
-        self.browser.implicitly_wait(10)
         URL = "http://localhost:1667/#/"
         self.browser.get(URL)
-        time.sleep(5)
+        time.sleep(10)
 
     def teardown(self):
         self.browser.quit()
@@ -88,22 +87,22 @@ class TestConduit(object):
 
     # TC-02 Login with valid credentials:
     def test_login(self):
-        sign_in_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        sign_in_btn = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         sign_in_btn.click()
-        time.sleep(3)
+        time.sleep(10)
 
         # email_field_xpath = '//input[@type="text"]'
         # password_field_xpath = '//input[@type="password"]'
         # find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
         # find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
-        email_field = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
-        password_field = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
-        login_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+        email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
+        password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
+        login_btn = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         email_field.send_keys((test_user["email_valid"]))
         password_field.send_keys((test_user["pwd_valid"]))
-        time.sleep(3)
+        time.sleep(10)
         login_btn.click()
-        time.sleep(6)
+        time.sleep(10)
 
         logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
         logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
