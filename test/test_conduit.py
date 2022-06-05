@@ -88,9 +88,9 @@ class TestConduit(object):
     def test_login(self):
         sign_in_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//a[@href="#/login"]')))
         #sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
+        time.sleep(2)
         sign_in_btn.click()
-        wait_until = ".element-i-want-to-be-present, .not-found-warning"
-        EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
+        #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
         email_field_xpath = '//input[@type="text"]'
         password_field_xpath = '//input[@type="password"]'
@@ -100,15 +100,17 @@ class TestConduit(object):
         #password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
         login_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        time.sleep(2)
         #email_field.send_keys((test_user["email_valid"]))
         #password_field.send_keys((test_user["pwd_valid"]))
         #time.sleep(10)
         login_btn.click()
         #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
-
+        time.sleep(2)
         logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
         logout_btn = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@active-class="active"]')))
         #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
+        time.sleep(2)
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
