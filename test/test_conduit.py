@@ -107,7 +107,8 @@ class TestConduit(object):
 
         logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
         logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
-
+        time.sleep(10)
+        
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
