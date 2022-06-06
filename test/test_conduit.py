@@ -16,6 +16,7 @@ class TestConduit(object):
         browser_options = Options()
         browser_options.headless = True
         self.browser = webdriver.Chrome(ChromeDriverManager().install(), options=browser_options)
+        self.browser.implicitly_wait(15)
         #self.browser = webdriver.Chrome(ChromeDriverManager().install())
         URL = "http://localhost:1667/#/"
         self.browser.get(URL)
@@ -92,25 +93,29 @@ class TestConduit(object):
         sign_in_btn.click()
         #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
 
-        email_field_xpath = '//input[@type="text"]'
-        password_field_xpath = '//input[@type="password"]'
-        find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
-        find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
+        #email_field_xpath = '//input[@type="text"]'
+        #password_field_xpath = '//input[@type="password"]'
+        #find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
+        #find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
         #email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
         #password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
+        email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
+        password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
+        email_field.send_keys((test_user["email_valid"]))
+        password_field.send_keys((test_user["password_valid"]))
         login_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
-        time.sleep(2)
+        time.sleep(10)
         #email_field.send_keys((test_user["email_valid"]))
         #password_field.send_keys((test_user["pwd_valid"]))
         #time.sleep(10)
         login_btn.click()
         #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
-        time.sleep(2)
+        time.sleep(10)
         logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
         logout_btn = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@active-class="active"]')))
         #wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
-        time.sleep(2)
+        time.sleep(10)
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
