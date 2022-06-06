@@ -102,7 +102,7 @@ class TestConduit(object):
         email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
         password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
         email_field.send_keys((test_user["email_valid"]))
-        password_field.send_keys((test_user["password_valid"]))
+        password_field.send_keys((test_user["pwd_valid"]))
         login_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         time.sleep(10)
