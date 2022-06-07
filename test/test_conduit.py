@@ -23,7 +23,7 @@ class TestConduit(object):
     def teardown(self):
         self.browser.quit()
 
-    #TC-04 Accept cookies
+    #TC-01 Accept cookies
     def test_accept_cookie(self):
         cookie_bar = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
@@ -45,7 +45,7 @@ class TestConduit(object):
 
         assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
 
-    # TC-01 Registration with invalid email
+    # TC-02 Registration with invalid email
     def test_registration(self):
         sign_up_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
@@ -84,7 +84,7 @@ class TestConduit(object):
         assert invalid_email_msg.text == "Email must be a valid email."
         assert reg_failure_alert.text == "Registration failed!"
 
-    # TC-02 Login with valid credentials:
+    # TC-03 Login with valid credentials:
     def test_login(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         time.sleep(5)
@@ -96,7 +96,7 @@ class TestConduit(object):
         assert logout_btn.is_displayed()
 
 
-    # TC-03 Logout user
+    # TC-04 Logout user
     def test_logout(self):
 
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
@@ -276,7 +276,7 @@ class TestConduit(object):
 
     # TC-10 Pagination
     def test_pagination(self):
-        login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
+        #login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
         pagination_buttons = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//li/a[@class="page-link"]')))
