@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 def login(browser, email, password):
     sign_in_btn = browser.find_element_by_xpath('//a[@href="#/login"]')
     sign_in_btn.click()
-    time.sleep(5)
+    time.sleep(30)
 
     email_field = browser.find_element_by_xpath('//input[@type="text"]')
     email_field.send_keys(email)
@@ -18,7 +18,7 @@ def login(browser, email, password):
 
     login_btn = browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
     login_btn.click()
-    time.sleep(10)
+    time.sleep(30)
 
 
 def click_logged_in_user_name(browser):
