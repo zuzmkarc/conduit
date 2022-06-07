@@ -18,7 +18,7 @@ def login(browser, email, password):
 
     login_btn = browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
     login_btn.click()
-    time.sleep(5)
+    time.sleep(10)
 
 
 def click_logged_in_user_name(browser):
