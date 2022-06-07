@@ -86,9 +86,8 @@ class TestConduit(object):
 
     # TC-03 Login with valid credentials:
     def test_login(self):
-        time.sleep(30)
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
-        time.sleep(30)
+        time.sleep(5)
 
         # logged_in_user_name = self.browser.find_element_by_xpath('//a[@class="nav-link" and @href="#/@csokinyuszi/"]')
         logout_btn = self.browser.find_element_by_xpath('//a[@active-class="active"]')
