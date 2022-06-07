@@ -23,109 +23,77 @@ class TestConduit(object):
     def teardown(self):
         self.browser.quit()
 
-    # TC-04 Accept cookies
-    # def test_accept_cookie(self):
-    #     cookie_bar = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
-    #     assert cookie_bar.is_displayed()
-    #
-    #     div_list_init_page = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-    #     div_list_init_page_length = len(div_list_init_page)
-    #
-    #     cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
-    #         (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
-    #     cookie_btn_accept.click()
-    #
-    #     time.sleep(6)
-    #
-    #     div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-    #     div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
-    #
-    #     assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
+    TC-04 Accept cookies
+    def test_accept_cookie(self):
+        cookie_bar = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
+        assert cookie_bar.is_displayed()
 
-    # # TC-01 Registration with invalid email
-    # def test_registration(self):
-    #     sign_up_btn = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
-    #     sign_up_btn.click()
-    #
-    #     username_field = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
-    #     username_field.clear()
-    #     username_field.send_keys(test_user["username_invalid"])
-    #     email_field = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
-    #     email_field.clear()
-    #     email_field.send_keys(test_user["email_invalid"])
-    #
-    #     password_field = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-    #
-    #     password_field.clear()
-    #     password_field.send_keys(test_user["pwd_invalid"])
-    #
-    #     login_btn = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-    #
-    #     login_btn.click()
-    #
-    #     reg_failure_alert = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-    #
-    #     invalid_email_msg = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
-    #
-    #     alert_popup = WebDriverWait(self.browser, 6).until(
-    #         EC.presence_of_element_located((By.XPATH, '//div[@class="swal-modal"]')))
-    #     assert alert_popup.is_displayed()
-    #
-    #     assert invalid_email_msg.text == "Email must be a valid email."
-    #     assert reg_failure_alert.text == "Registration failed!"
+        div_list_init_page = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+        div_list_init_page_length = len(div_list_init_page)
+
+        cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
+            (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
+        cookie_btn_accept.click()
+
+        time.sleep(6)
+
+        div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
+        div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
+
+        assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
+
+    # TC-01 Registration with invalid email
+    def test_registration(self):
+        sign_up_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
+        sign_up_btn.click()
+
+        username_field = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
+        username_field.clear()
+        username_field.send_keys(test_user["username_invalid"])
+        email_field = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
+        email_field.clear()
+        email_field.send_keys(test_user["email_invalid"])
+
+        password_field = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
+
+        password_field.clear()
+        password_field.send_keys(test_user["pwd_invalid"])
+
+        login_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+        login_btn.click()
+
+        reg_failure_alert = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+
+        invalid_email_msg = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@class="swal-text"]')))
+
+        alert_popup = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//div[@class="swal-modal"]')))
+        assert alert_popup.is_displayed()
+
+        assert invalid_email_msg.text == "Email must be a valid email."
+        assert reg_failure_alert.text == "Registration failed!"
 
     # TC-02 Login with valid credentials:
     def test_login(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
-        #try:
-            # sign_in_btn = self.browser.find_element_by_xpath('//a[@href="#/login"]')
-            # time.sleep(5)
-            # sign_in_btn.click()
-            # time.sleep(5)
-            #
-            # # email_field_xpath = '//input[@type="text"]'
-            # # password_field_xpath = '//input[@type="password"]'
-            # # find_and_clear_element(self.browser, email_field_xpath).send_keys((test_user["email_valid"]))
-            # # find_and_clear_element(self.browser, password_field_xpath).send_keys((test_user["pwd_valid"]))
-            # # email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
-            # # password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
-            # # email_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="text"]')))
-            # # password_field = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
-            # email_field = self.browser.find_element_by_xpath('//input[@type="text"]')
-            # email_field.send_keys((test_user["email_valid"]))
-            # password_field = self.browser.find_element_by_xpath('//input[@type="password"]')
-            # password_field.send_keys((test_user["pwd_valid"]))
-            # # login_btn = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-            # login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
-            # # email_field.send_keys((test_user["email_valid"]))
-            # # password_field.send_keys((test_user["pwd_valid"]))
-            # # time.sleep(10)
-            # login_btn.click()
-            # wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
-            #time.sleep(5)
+        time.sleep(5)
+
         logged_in_user_name = self.browser.find_element_by_xpath('//a[@class="nav-link" and @href="#/@csokinyuszi/"]')
         logout_btn = self.browser.find_element_by_xpath('//a[@active-class="active"]')
-        #logged_in_user_name = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@class="nav-link" and @href="#/@csokinyuszi/"]')))
-        #logout_btn = WebDriverWait(self.browser, 6).until(EC.element_to_be_clickable((By.XPATH, '//a[@active-class="active"]')))
-            # wait_until = ".element-i-want-to-be-present, .not-found-warning" EC.element_to_be_clickable((By.CSS_SELECTOR, wait_until))
+
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
-        #except:
-        #     print("An exception error occured")
-        # else:
-        #     print("All good")
-        # finally:
-        #     print("The 'try except' is finished")
 
 
 # TC-03 Logout user
