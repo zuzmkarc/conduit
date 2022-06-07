@@ -1,3 +1,0 @@
-
-An exception error occured
-The 'try except' is finished
