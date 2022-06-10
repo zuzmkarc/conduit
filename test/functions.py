@@ -29,23 +29,28 @@ def registration(browser, username, email, password):
         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
 
     login_btn.click()
-    confirm_btn = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH,'//button[@"swal-button swal-button--confirm"]')))
+    confirm_btn = WebDriverWait(browser, 6).until(
+        EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
     confirm_btn.click()
-    logout_btn = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
+    logout_btn = WebDriverWait(browser, 6).until(
+        EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
     logout_btn.click()
 
+
 def login(browser, email, password):
-    sign_in_btn = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+    sign_in_btn = WebDriverWait(browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
     sign_in_btn.click()
     time.sleep(5)
 
-    email_field = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH, '//input[@type="text"]')))
+    email_field = WebDriverWait(browser, 6).until(EC.presence_of_element_located((By.XPATH, '//input[@type="text"]')))
     email_field.send_keys(email)
 
-    password_field = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH, '//input[@type="password"]')))
+    password_field = WebDriverWait(browser, 6).until(
+        EC.presence_of_element_located((By.XPATH, '//input[@type="password"]')))
     password_field.send_keys(password)
 
-    login_btn = WebDriverWait(browser, 6).until (EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+    login_btn = WebDriverWait(browser, 6).until(
+        EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     login_btn.click()
     time.sleep(5)
 
