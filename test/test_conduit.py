@@ -235,7 +235,7 @@ class TestConduit(object):
 
         assert comment_list_before_del_length == comment_list_after_del_length + 1
 
-    # TC-08 Update element (Change profile picture)
+    # TC-09 Update element (Change profile picture)
     def test_update_profile_picture(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -264,7 +264,7 @@ class TestConduit(object):
 
         assert profile_pic.get_attribute("src") == (test_user["profile-pic"])
 
-    # TC-09 List elements (List all articles related to a single tag)
+    # TC-10 List elements (List all articles related to a single tag)
     def test_list_elements(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -282,7 +282,7 @@ class TestConduit(object):
         assert ipsum_tag_filter.is_displayed()
         assert len(tagged_articles_list) == 3
 
-    # TC-10 Pagination (Navigate to the next page using pagination buttons)
+    # TC-11 Pagination (Navigate to the next page using pagination buttons)
     def test_pagination(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
