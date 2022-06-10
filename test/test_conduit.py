@@ -254,6 +254,7 @@ class TestConduit(object):
         confirm_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
         confirm_btn.click()
+        time.sleep(5)
 
         click_logged_in_user_name(self.browser)
         time.sleep(6)
