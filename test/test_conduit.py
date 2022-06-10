@@ -23,8 +23,7 @@ class TestConduit(object):
     def teardown(self):
         self.browser.quit()
 
-
-    # TC-01 Accept cookies
+    # TC-01 Accept cookies - Adatkezelési nyilatkozat használata: sütik elfogadásának ellenőrzése
     def test_accept_cookie(self):
         cookie_bar = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
@@ -46,7 +45,7 @@ class TestConduit(object):
 
         assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
 
-    # TC-02 Registration with invalid email
+    # TC-02 Registration with invalid email - Regisztrációs folyamat tesztelése negatív ágon
     def test_registration(self):
         sign_up_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/register"]')))
@@ -85,7 +84,7 @@ class TestConduit(object):
         assert invalid_email_msg.text == "Email must be a valid email."
         assert reg_failure_alert.text == "Registration failed!"
 
-    # TC-03 Login with valid credentials:
+    # TC-03 Login with valid credentials - Bejelentkezési folyamat tesztelése pozitív ágon
     def test_login(self):
         registration(self.browser, (test_user["username_valid"]), (test_user["email_valid"]), (test_user["pwd_valid"]))
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
@@ -97,20 +96,22 @@ class TestConduit(object):
         assert logged_in_user_name.text == test_user["username_valid"]
         assert logout_btn.is_displayed()
 
-    # TC-04 Logout user
+    # TC-04 Logout user - Kijelentkezési folyamat tesztelése
     def test_logout(self):
 
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
-        logout_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
+        logout_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
 
         logout_btn.click()
         time.sleep(5)
 
-        sign_in_btn = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        sign_in_btn = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert sign_in_btn.is_displayed()
 
-    # TC-05 Save data to file (Collect user's article titles into txt file)
+    # TC-05 Save data to file - Adatok lementése felületről: egy felhasználó által létrehozott cikkek címeinek kiírása .txt file-ba
     def test_save_data_to_file(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -132,7 +133,7 @@ class TestConduit(object):
 
         assert len(check_content) == len(author_articles_titles)
 
-    # TC-06 Import data from csv file (Create new article by importing data from external csv file)
+    # TC-06 Import data from csv file - Ismételt és sorozatos adatbevitel adatforrásból: 4 új cikk létrehozása csv file-ból importált adatokkal
     def test_import_data_from_file(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         time.sleep(6)
@@ -177,7 +178,7 @@ class TestConduit(object):
 
         assert articles_after_length - 4 == articles_before_length
 
-    # TC-07 Create new element (Add comment to article)
+    # TC-07 Create new element - Új adat bevitel: megjegyzés hozzáadása egy cikkhez
     def test_create_new_element(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         click_logged_in_user_name(self.browser)
@@ -201,7 +202,7 @@ class TestConduit(object):
 
         assert my_comment.text == test_article["comment"]
 
-    # TC-08 Delete element  (Add and delete comment to article)
+    # TC-08 Delete element  - Adat vagy adatok törlése: egy cikkhez hozzáadott megjegyzés eltávolítása
     def test_delete_element(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         all_articles = self.browser.find_elements_by_xpath('//a[@class="preview-link"]')
@@ -235,7 +236,7 @@ class TestConduit(object):
 
         assert comment_list_before_del_length == comment_list_after_del_length + 1
 
-    # TC-09 Update element (Change profile picture)
+    # TC-09 Update element - Meglévő adat módosítás: profilkép cseréje
     def test_update_profile_picture(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -264,7 +265,7 @@ class TestConduit(object):
 
         assert profile_pic.get_attribute("src") == (test_user["profile-pic"])
 
-    # TC-10 List elements (List all articles related to a single tag)
+    # TC-10 List elements - Adatok listázása: egy kulcsszóhoz tartozó összes cikk megjelenítése
     def test_list_elements(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -282,7 +283,7 @@ class TestConduit(object):
         assert ipsum_tag_filter.is_displayed()
         assert len(tagged_articles_list) == 3
 
-    # TC-11 Pagination (Navigate to the next page using pagination buttons)
+    # TC-11 Pagination - Több oldalas lista bejárása: lapozás az oldalon
     def test_pagination(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
@@ -300,4 +301,3 @@ class TestConduit(object):
 
         assert page_one_btn.value_of_css_property('color') == active_button_color_value
         assert page_two_btn.value_of_css_property('color') == inactive_button_color_value
-
