@@ -14,6 +14,7 @@ def registration(browser, username, email, password):
         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
     username_field.clear()
     username_field.send_keys(username)
+
     email_field = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Email"]')))
     email_field.clear()
@@ -21,17 +22,17 @@ def registration(browser, username, email, password):
 
     password_field = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Password"]')))
-
     password_field.clear()
     password_field.send_keys(password)
 
     login_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-
     login_btn.click()
+
     confirm_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
     confirm_btn.click()
+
     logout_btn = WebDriverWait(browser, 6).until(
         EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
     logout_btn.click()
