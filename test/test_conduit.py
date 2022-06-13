@@ -4,7 +4,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from test_data import test_user, test_article
+from test_data import test_user, test_article, messages
 import csv
 from selenium.webdriver.chrome.options import Options
 from functions import registration, login, click_logged_in_user_name, find_and_clear_element
@@ -29,21 +29,22 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//div[@class = "cookie__bar__buttons"]')))
         assert cookie_bar.is_displayed()
 
-        div_list_init_page = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-        div_list_init_page_length = len(div_list_init_page)
+        accept_btn_list_before_click = self.browser.find_elements_by_xpath(
+            '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
+        print(len(accept_btn_list_before_click))
 
         cookie_btn_accept = WebDriverWait(self.browser, 6).until(EC.presence_of_element_located(
             (By.XPATH, '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
         cookie_btn_accept.click()
 
-        time.sleep(6)
+        time.sleep(4)
 
-        div_list_after_cookie_accept = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class]')))
-        div_list_after_cookie_accept_length = len(div_list_after_cookie_accept)
+        accept_btn_list_after_click = self.browser.find_elements_by_xpath(
+            '//button[@class ="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')
 
-        assert div_list_init_page_length - 4 == div_list_after_cookie_accept_length
+        print(len(accept_btn_list_after_click))
+
+        assert not len(accept_btn_list_after_click)
 
     # TC-02 Registration with invalid email - Regisztrációs folyamat tesztelése negatív ágon helytelen email cím megadásával
     def test_registration(self):
@@ -81,8 +82,8 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//div[@class="swal-modal"]')))
         assert alert_popup.is_displayed()
 
-        assert invalid_email_msg.text == "Email must be a valid email."
-        assert reg_failure_alert.text == "Registration failed!"
+        assert invalid_email_msg.text == messages["invalid_email_msg"]
+        assert reg_failure_alert.text == messages["reg_failure_alert"]
 
     # TC-03 Login with valid credentials - Bejelentkezési folyamat tesztelése pozitív ágon
     def test_login(self):
@@ -140,7 +141,9 @@ class TestConduit(object):
 
         articles_before = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"] ')))
-        articles_before_length = len(articles_before)
+
+        all_articles_counter = len(articles_before)
+        my_articles_counter = 0
 
         new_article_btn = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
@@ -164,6 +167,8 @@ class TestConduit(object):
                     EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
                 publish_btn.click()
                 time.sleep(2)
+                all_articles_counter += 1
+                my_articles_counter += 1
                 new_article_btn.click()
                 time.sleep(2)
 
@@ -171,20 +176,15 @@ class TestConduit(object):
         home_btn.click()
         time.sleep(6)
 
-        articles_after = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
-
-        articles_after_length = len(articles_after)
-
-        assert articles_after_length - 4 == articles_before_length
+        assert all_articles_counter - my_articles_counter == len(articles_before)
 
     # TC-07 Create new element - Új adat bevitel: megjegyzés hozzáadása egy cikkhez
     def test_create_new_element(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
         click_logged_in_user_name(self.browser)
         time.sleep(6)
-        all_articles = self.browser.find_elements_by_xpath('//a[@class="preview-link"]')
-        article_to_comment = all_articles[0]
+        my_articles = self.browser.find_elements_by_xpath('//a[@class="preview-link"]')
+        article_to_comment = my_articles[0]
         article_to_comment.click()
         time.sleep(6)
 
@@ -209,10 +209,10 @@ class TestConduit(object):
         article_to_comment = all_articles[0]
         article_to_comment.click()
 
+        time.sleep(3)
+
         comment_field_xpath = '//textarea[@placeholder="Write a comment..."]'
         find_and_clear_element(self.browser, comment_field_xpath).send_keys(test_article["comment"])
-
-        time.sleep(5)
 
         post_comment_btn = WebDriverWait(self.browser, 3).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
@@ -222,9 +222,6 @@ class TestConduit(object):
 
         comment_list_before_del = WebDriverWait(self.browser, 3).until(
             EC.presence_of_all_elements_located((By.XPATH, '//p[@class="card-text"]')))
-        comment_list_before_del_length = len(comment_list_before_del)
-
-        time.sleep(2)
 
         delete_btn = self.browser.find_elements_by_xpath('//i[@class="ion-trash-a"]')[0]
         delete_btn.click()
@@ -232,9 +229,8 @@ class TestConduit(object):
         time.sleep(2)
 
         comment_list_after_del = self.browser.find_elements_by_xpath('//p[@class="card-text"]')
-        comment_list_after_del_length = len(comment_list_after_del)
 
-        assert comment_list_before_del_length == comment_list_after_del_length + 1
+        assert len(comment_list_before_del) == len(comment_list_after_del) + 1
 
     # TC-09 Update element - Meglévő adat módosítás: profilkép cseréje
     def test_update_profile_picture(self):
@@ -269,19 +265,23 @@ class TestConduit(object):
     def test_list_elements(self):
         login(self.browser, (test_user["email_valid"]), (test_user["pwd_valid"]))
 
+        ipsum_tagged_articles_main = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located(
+                (By.XPATH, '//a[@href="#/tag/ipsum" and @class="tag-pill tag-default"]')))
+
         ipsum_tag = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href = "#/tag/ipsum"]')))
         ipsum_tag.click()
         time.sleep(6)
 
-        tagged_articles_list = WebDriverWait(self.browser, 6).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//div[@class="article-preview"]')))
+        ipsum_tag_articles_filtered = WebDriverWait(self.browser, 6).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//a[@href="#/tag/ipsum" and @class="router-link-exact-active router-link-active tag-pill tag-default"]')))
 
         ipsum_tag_filter = WebDriverWait(self.browser, 6).until(
             EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
 
         assert ipsum_tag_filter.is_displayed()
-        assert len(tagged_articles_list) == 3
+        assert len(ipsum_tagged_articles_main) == len(ipsum_tag_articles_filtered)
 
     # TC-11 Pagination - Több oldalas lista bejárása: lapozás az oldalon
     def test_pagination(self):
@@ -291,20 +291,19 @@ class TestConduit(object):
         pagination_buttons = WebDriverWait(self.browser, 6).until(
             EC.presence_of_all_elements_located((By.XPATH, '//li/a[@class="page-link"]')))
 
-        page_one_btn = pagination_buttons[0]
-        page_two_btn = pagination_buttons[1]
+        active_page_button_color_value = "rgba(255, 255, 255, 1)"
+        inactive_page_button_color_value = "rgba(92, 184, 92, 1)"
 
-        active_button_color_value = "rgba(255, 255, 255, 1)"
-        inactive_button_color_value = "rgba(92, 184, 92, 1)"
+        first_page_button = pagination_buttons[0]
+        last_page_button = pagination_buttons[-1]
 
-        page_one_btn.click()
-        time.sleep(6)
+        assert first_page_button.value_of_css_property('color') == active_page_button_color_value
+        assert last_page_button.value_of_css_property('color') == inactive_page_button_color_value
 
-        assert page_one_btn.value_of_css_property('color') == active_button_color_value
-        assert page_two_btn.value_of_css_property('color') == inactive_button_color_value
+        for page in range(len(pagination_buttons)):
+            pagination_buttons[page].click()
 
-        page_two_btn.click()
-        time.sleep(6)
+        time.sleep(3)
 
-        assert page_two_btn.value_of_css_property('color') == active_button_color_value
-        assert page_one_btn.value_of_css_property('color') == inactive_button_color_value
+        assert first_page_button.value_of_css_property('color') == inactive_page_button_color_value
+        assert last_page_button.value_of_css_property('color') == active_page_button_color_value

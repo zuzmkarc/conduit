@@ -8,6 +8,12 @@ test_user = {
     "profile-pic": "https://news.cgtn.com/news/7a596a4e30677a4e7963444d7745444f786b444f31457a6333566d54/img/5fde4bcfe6bc4843b92ceb296a0b5201/5fde4bcfe6bc4843b92ceb296a0b5201.jpg"
 }
 
+messages = {
+    "invalid_email_msg": "Email must be a valid email.",
+    "reg_failure_alert": "Registration failed!"
+
+}
+
 test_article = {"article_title": "Test_title",
     "article_about": "Test_about",
     "article_text": "Test_text",
