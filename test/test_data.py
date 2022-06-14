@@ -9,8 +9,8 @@ test_user = {
 }
 
 messages = {
-    "invalid_email_msg": "Email must be a valid email.",
-    "reg_failure_alert": "Registration failed!"
+    "invalid_email": "Email must be a valid email.",
+    "reg_failure": "Registration failed!"
 
 }
 
