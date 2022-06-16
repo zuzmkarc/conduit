@@ -4,7 +4,7 @@ test_user = {
     "pwd_invalid": "Test2022",
     "username_valid": "Teszt",
     "pwd_valid": "Teszt123",
-    "email_valid": "tesztelo5@gmail.com",
+    "email_valid": "tesztelo6@gmail.com",
     "profile-pic": "https://news.cgtn.com/news/7a596a4e30677a4e7963444d7745444f786b444f31457a6333566d54/img/5fde4bcfe6bc4843b92ceb296a0b5201/5fde4bcfe6bc4843b92ceb296a0b5201.jpg"
 }
 
