@@ -63,6 +63,7 @@ class TestConduit(object):
         login_btn = self.browser.find_element_by_xpath('//button[@class="btn btn-lg btn-primary pull-xs-right"]')
 
         login_btn.click()
+        time.sleep(2)
 
         alert_popup = WebDriverWait(self.browser, 3).until(
             EC.presence_of_element_located((By.XPATH, '//div[@class="swal-modal"]')))
